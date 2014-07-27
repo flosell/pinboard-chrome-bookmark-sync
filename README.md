@@ -20,7 +20,8 @@ Usage
 * In this folder, create a bookmark named `-> Open in Pinboard!` (exactly like this) with a URL pointing to pinboard-tags (like `https://pinboard.in/u:someuser/t:foo/t:bar` to have a folder that contains all bookmarks having tags "foo" and "bar")
 * Start Syncing (no UI for this yet)
 
-Still in Development: 
+Still in Development
+-------------------- 
 
 * Push Bookmarks back to the server
 * UI to set User Credentials and Sync
