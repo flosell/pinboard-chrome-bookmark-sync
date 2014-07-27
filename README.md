@@ -1,5 +1,6 @@
 pinboard-chrome-bookmark-sync
 =============================
+A Chrome extension to keep your bookmarks in sync between browser and pinboard.in - Bookmark Folders can be any combination of tags, not just one tag
 
 **pre-alpha, not very well tested. do not use this on your production-browser unless you know what you are doing and have good backups**
 
