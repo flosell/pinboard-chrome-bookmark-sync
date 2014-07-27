@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
 
-  "name": "One-click Kittens",
-  "description": "This extension demonstrates a browser action with kittens.",
+  "name": "pinboard-chrome-bookmark-sync",
+  "description": "A Chrome extension to keep your bookmarks in sync between browser and pinboard.in - Bookmark Folders can be any combination of tags, not just one tag",
   "version": "1.0",
 
   "permissions": [
