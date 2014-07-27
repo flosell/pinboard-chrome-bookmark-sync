@@ -74,7 +74,6 @@ var Bookmarks = function() {
     
   }
 
-
   module.setBookmarks = function(folderName, bookmarks) {
     createBookmarkFolder(folderName,function(folderNode) {
       bookmarks.forEach(function(bookmark) {
@@ -83,6 +82,27 @@ var Bookmarks = function() {
     })
   };
 
+  var tagsForUrl = function(url) {
+    return url.substr(url.indexOf("t:")).split("/").map(function(part) { return part.replace("t:",""); });
+  };
+
+  // we treat everything as a target-folder that has a bookmark to a tags-overview in a particular format
+  module.findTargetFolders = function(callback) {
+    chrome.bookmarks.search({
+      title: "-> Open in Pinboard!"
+    },function(result) {
+      var targetFolders = result.filter(function(elem) {
+        return elem.url.indexOf("https://pinboard.in/") === 0;
+      }).map(function(elem) {
+        return {
+          folderId: elem.parentId,
+          tags: tagsForUrl(elem.url)
+        };
+      });
+
+      callback(targetFolders);
+    })
+  }
   
 
   return module;
