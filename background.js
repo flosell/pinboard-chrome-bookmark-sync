@@ -1,7 +1,9 @@
-var App = function(pinboardModule, bookmarksModule) {
+var App = function(pinboardModule, bookmarksModule,uiModule) {
   var module = {};
 
   module.sync = function() {
+    uiModule.notifySyncStarted();
+    
     bookmarksModule.findTargetFolders(function(targetFolders) {
       targetFolders.forEach(function(targetFolder) {
         pinboardModule.getBookmarksForTags(targetFolder.tags,function(bookmarks) {
@@ -9,10 +11,17 @@ var App = function(pinboardModule, bookmarksModule) {
         });
       });
     });
+
+    setTimeout(function() {
+      uiModule.notifySyncStopped(); // Dirty hack, I don't know we are really done
+    },1000)
   };
 
+  module.init = function() {
+    uiModule.registerSyncButtonClicked(module.sync);
+  }
+
   return module;
-  
 }
 
 var Pinboard = function(settings) {
@@ -113,3 +122,23 @@ var Settings = function() {
   }
   return module;
 }
+
+
+var UI = function() {
+  var module = {};
+
+  module.notifySyncStarted = function() {
+    chrome.browserAction.setBadgeText({text:"sync"})
+  };  
+  module.notifySyncStopped = function() {
+    chrome.browserAction.setBadgeText({text:""})
+  };
+  module.registerSyncButtonClicked = function(handler) {
+    chrome.browserAction.onClicked.addListener(handler);
+  }
+
+  return module;
+}
+
+var app = App(Pinboard(Settings()),Bookmarks(),UI());
+chrome.runtime.onInstalled.addListener(app.init);
